@@ -14,14 +14,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-
 Route::get('/test-route', function () {
     return response()->json(['message' => 'Routing is working!']);
 });
-
-
-
 
 
 Route::middleware('auth:sanctum')->group(function () {

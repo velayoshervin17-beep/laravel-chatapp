@@ -14,10 +14,20 @@ class LobbyController extends Controller
     public function joinLobby(Request $request, String $code)
     {
 
-        Log::info('Incoming body payload:', $request->all());
-        $request->validate([
-            'participant' => 'required|string|max:255'
+        // Log::info('Incoming body payload:', $request->all());
+        // $request->validate([
+        //     'participant' => 'required|string|max:255'
+        // ]);
+
+        $validated = $request->validate([
+            'participant' => ['required', 'string', 'max:255']
         ]);
+
+
+        //use this once Room table is available
+        // $validateCode = validator(['code' => $code], [
+        //     'code' => ['required', 'string', 'exists:room,code']
+        // ],)->validate();
 
         $participant = $request->input('participant');
 
@@ -32,17 +42,22 @@ class LobbyController extends Controller
         $chatMessage->message = "{$participant} has joined the lobby.";
         $chatMessage->sender = '[System]';
         $chatMessage->message_type = "event";
+        $chatMessage->participantId = $newParticipant->id;
         $chatMessage->save();
 
         $chatToBroadcast = [
             'code' => $chatMessage->code,
             'message' => $chatMessage->message,
             'sender' => $chatMessage->sender,
-            'messageType' => $chatMessage->message_type
+            'messageType' => $chatMessage->message_type,
+            'participantId' => $chatMessage->participantId
         ];
 
 
-        event(new \App\Events\LobbyActivityEvent(new Fluent($chatToBroadcast)));
+        //working
+        // event(new \App\Events\LobbyActivityEvent(new Fluent($chatToBroadcast)));
+
+        broadcast(new \App\Events\LobbyActivityEvent(new Fluent($chatToBroadcast)))->toOthers();
 
         return response()->json([
             'success' => 'true',
@@ -52,6 +67,19 @@ class LobbyController extends Controller
 
     public function leaveLobby(Request $request, String $code)
     {
+
+        //validation here
+
+        //use this once Room table is available
+        // $validateCode = validator(['code' => $code], [
+        //     'code' => ['required', 'string', 'exists:room,code']
+        // ],)->validate();
+
+        $validated = $request->validate([
+            'participant' => ['required', 'string', 'max:255']
+        ]);
+
+
         $participant = $request->input('participant');
         $participantId = $request->input('id');
 
@@ -69,16 +97,21 @@ class LobbyController extends Controller
         $chatMessage->message = "{$participant} has left the lobby.";
         $chatMessage->sender = '[System]';
         $chatMessage->message_type = "event";
+        $chatMessage->participantId = $participantId;
         $chatMessage->save();
 
         $chatToBroadcast = [
             'code' => $chatMessage->code,
             'message' => $chatMessage->message,
             'sender' => $chatMessage->sender,
-            'messageType' => $chatMessage->message_type
+            'messageType' => $chatMessage->message_type,
+            'participantId' => $chatMessage->participantId
         ];
 
-        event(new \App\Events\LobbyActivityEvent(new Fluent($chatToBroadcast)));
+        //working
+        // event(new \App\Events\LobbyActivityEvent(new Fluent($chatToBroadcast)));
+
+        broadcast(new \App\Events\LobbyActivityEvent(new Fluent($chatToBroadcast)))->toOthers();
 
         return response()->json([
             'success message' => 'player has left',

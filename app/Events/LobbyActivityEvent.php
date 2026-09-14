@@ -20,6 +20,7 @@ class LobbyActivityEvent implements ShouldBroadcast
     public $sender;
     public $messageType;
     public $timestamp;
+    public $participantId;
 
 
    // public $participant;
@@ -32,6 +33,7 @@ class LobbyActivityEvent implements ShouldBroadcast
         $this->message = $chatMessage->message;
         $this->sender =  $chatMessage->sender;
         $this->messageType = $chatMessage->messageType;
+        $this->participantId = $chatMessage->participantId;
         $this->timestamp = now()->toIso8601String();
     }
 
