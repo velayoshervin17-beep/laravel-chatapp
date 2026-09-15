@@ -45,3 +45,27 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("/logout",[AuthController::class,'logout']);
 
 });
+
+
+
+
+Route::post('/login', [AuthController::class, 'login']);        
+
+
+// Route::get('/test-auth', function () {
+//     return response()->json([
+//         'authenticated' => Auth::check(),
+//         'user' => Auth::user(),
+//         'session_id' => session()->getId(),
+//     ]);
+// });
+
+
+// Route::post('/test-broadcast-auth', function (Request $request) {
+//     return response()->json([
+//         'authenticated' => Auth::check(),
+//         'user' => Auth::user(),
+//         'session_id' => session()->getId(),
+//         'body' => $request->all(),
+//     ]);
+// });

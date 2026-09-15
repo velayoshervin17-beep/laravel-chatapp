@@ -20,24 +20,3 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::post('/login', [AuthController::class, 'login']);        
-
-
-Route::get('/test-auth', function () {
-    return response()->json([
-        'authenticated' => Auth::check(),
-        'user' => Auth::user(),
-        'session_id' => session()->getId(),
-    ]);
-});
-
-
-Route::post('/test-broadcast-auth', function (Request $request) {
-    return response()->json([
-        'authenticated' => Auth::check(),
-        'user' => Auth::user(),
-        'session_id' => session()->getId(),
-        'body' => $request->all(),
-    ]);
-});
