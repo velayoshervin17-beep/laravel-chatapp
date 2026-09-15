@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 
 /*
@@ -14,8 +15,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 Route::get('/test-route', function () {
     return response()->json(['message' => 'Routing is working!']);
+});
+
+Route::get('/userList', function () {
+
+    $users = User::select('name', 'email')->get();
 });
 
 
