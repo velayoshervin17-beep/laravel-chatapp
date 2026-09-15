@@ -22,7 +22,7 @@ Route::get('/test-route', function () {
 
 Route::get('/userList', function () {
 
-    $users = User::select('name', 'email')->get();
+    return User::select('name', 'email')->get();
 });
 
 
