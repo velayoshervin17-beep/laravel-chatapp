@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+
 
 
 /*
@@ -39,4 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/lobby/join/{code}', [App\Http\Controllers\LobbyController::class, 'joinLobby']);
 
     Route::post('/lobby/leave/{code}', [App\Http\Controllers\LobbyController::class, 'leaveLobby']);
+
+    Route::post("/logout",[AuthController::class,'logout']);
+
 });
