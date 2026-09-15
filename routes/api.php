@@ -49,7 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-Route::post('/login', [AuthController::class, 'login']);        
+Route::post('/login', [AuthController::class, 'login']);
 
 
 // Route::get('/test-auth', function () {
@@ -59,6 +59,8 @@ Route::post('/login', [AuthController::class, 'login']);
 //         'session_id' => session()->getId(),
 //     ]);
 // });
+
+//m
 
 
 // Route::post('/test-broadcast-auth', function (Request $request) {
